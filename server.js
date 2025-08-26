@@ -15,9 +15,21 @@ app.use(express.json());
 
 connectDb();
 
+app.get("/", (req, res) => {
+  res.json({
+    ok: true,
+    message: "API funcionando",
+    endpoints: ["/users", "/products"],
+  });
+});
+
 app.use("/users", userRoutes);
 app.use("/products", productRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Servidor escuchando en el puerto ${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Servidor escuchando en el puerto ${PORT}`);
+  });
+}
+
+module.exports = app;
